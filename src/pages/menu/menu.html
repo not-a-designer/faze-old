@@ -1,0 +1,52 @@
+<ion-menu [content]="content">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content scroll="true" no-padding [@fade]>
+    <ion-list>
+      <button ion-item no-lines menuClose (click)="slideToProfiles()">
+        <ion-icon name="home"item-left></ion-icon>
+        To Profiles
+      </button>
+      <ion-list-header>Settings</ion-list-header>
+      <ion-toolbar>
+        <ion-segment [(ngModel)]="settingsPage">
+          <ion-segment-button value="personal">
+            Personal
+          </ion-segment-button>
+          <ion-segment-button value="billing">
+            Billing
+          </ion-segment-button>
+          <ion-segment-button value="shipping">
+            Shipping
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-slides [ngSwitch]="settingsPage">
+        <ion-slide *ngSwitchCase="'personal'">
+          <personal></personal>
+        </ion-slide>
+        <ion-slide *ngSwitchCase="'billing'">
+            <billing></billing>
+        </ion-slide>
+        <ion-slide *ngSwitchCase="'shipping'">
+          <shipping></shipping>
+        </ion-slide>
+      </ion-slides>
+    </ion-list>
+  </ion-content>
+  <ion-footer no-padding>
+    <button ion-button icon-right block full menuClose>
+      <ion-icon name="log-out"></ion-icon>
+      Logout
+    </button>
+  </ion-footer>
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

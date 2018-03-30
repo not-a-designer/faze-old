@@ -1,0 +1,19 @@
+page-tabs {
+
+    ion-slide { 
+        display: block !important;
+        align-items: unset !important;
+    }
+
+    #delete, #save, #next, #cam, #flash {
+        box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+
+    #opacity-slider {
+        min-width: 75vw; 
+        margin-left: -15px;
+    }
+
+
+}

@@ -1,0 +1,313 @@
+<ion-header [@fade] *ngIf="tabs.getActiveIndex() !== 2">
+  <tabs-navbar [activeTab]="getCurrentTab()" (action)="addOrShare($event)">
+    <ion-title *ngIf="getCurrentTab() === 0">{{ selectedProfile?.name }}</ion-title>
+    <ion-title *ngIf="getCurrentTab() === 1">App</ion-title>
+  </tabs-navbar>
+  <!--<ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title *ngIf="tabs.getActiveIndex() === 0">{{ selectedProfile?.name }}</ion-title>
+    <ion-title *ngIf="tabs.getActiveIndex() === 1">App</ion-title>
+    <ion-buttons right *ngIf="tabs.getActiveIndex() === 0">
+      <button ion-button icon-only (click)="showOptions($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>-->
+</ion-header>
+
+<!--  SLIDING TAB CONTENT  -->
+<ion-content>
+  <ion-slides 
+    #tabs 
+    id="tabs" 
+    centeredSlides="false" 
+    initialSlide="1"
+    (ionSlideWillChange)="toggleSlideLock()">
+
+    <ion-slide id="details-slide">
+      <profile-details>
+        <ion-card *ngIf="selectedProfile">
+          <ion-card-header no-padding>
+            <ion-slides 
+              #thumbSlide 
+              id="thumbSlide" 
+              *ngIf="selectedProfile.images; else noPics"
+              >
+              <ion-slide 
+                *ngFor="let img of selectedProfile.images; let j = index"
+                pager="true"
+                paginationType="bullet">
+                <ion-fab top right>
+                  <button 
+                    ion-fab 
+                    mini 
+                    id="deleteImg"
+                    color="clear" 
+                    style="box-shadow: none;"
+                    (click)="removeSelectedImage(j)">
+                    <ion-icon color="light" name="close"></ion-icon>
+                  </button>
+                </ion-fab>
+  
+                <ion-fab 
+                  bottom 
+                  left 
+                  id="prev" 
+                  *ngIf="!thumbSlide?.isBeginning()">
+                  <button 
+                    ion-fab 
+                    mini 
+                    color="clear" 
+                    outline 
+                    (click)="prevThumbSlide()">
+                    <ion-icon color="light" name="arrow-back"></ion-icon>
+                  </button>
+                </ion-fab>
+                <ion-fab 
+                  bottom 
+                  right 
+                  id="next" 
+                  *ngIf="!thumbSlide?.isEnd()">
+                  <button 
+                    ion-fab 
+                    mini 
+                    color="clear" 
+                    outline 
+                    (click)="nextThumbSlide()">
+                    <ion-icon color="light" name="arrow-forward"></ion-icon>
+                  </button>
+                </ion-fab>
+                <img [src]="img">
+              </ion-slide>
+            </ion-slides>
+
+            <ng-template #noPics>
+                <ion-list-header>No Pictures</ion-list-header>
+                <button 
+                  ion-item 
+                  detail-none 
+                  padding 
+                  no-lines 
+                  text-center 
+                  icon-left 
+                  (click)="slideToCamera(this.selectedId)">
+                    <ion-icon large name="add"></ion-icon>
+                    <ion-icon large name="camera"></ion-icon>
+                </button>
+            </ng-template>
+          </ion-card-header>
+
+          <ion-card-content no-padding>
+
+            <ion-card-title text-center>
+              <ion-item no-lines>
+                <ion-input 
+                  type="text" 
+                  placeholder="Profile title" 
+                  [(ngModel)]="selectedProfile.name" 
+                  required></ion-input>
+                <ion-note item-right>
+                  {{ selectedProfile.images ? (selectedProfile.images.length + ' imgs') : '' }}
+                </ion-note>
+              </ion-item>
+            </ion-card-title>
+
+            <ion-list no-padding>
+              <ion-item>
+                <ion-label inline>Created:</ion-label>
+                <ion-note item-right>{{ selectedProfile.dateCreated }}</ion-note>
+              </ion-item>
+              <ion-item no-lines>
+                <ion-textarea placeholder="Profile description" [(ngModel)]="selectedProfile.desc"></ion-textarea>
+              </ion-item>                       
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </profile-details>
+    </ion-slide>
+
+
+    <ion-slide id="profiles-slide">
+      <profiles>
+        <ion-list #profileList *ngIf="sampleProfiles">
+          <ion-item 
+            detail-none 
+            [class.selected-profile]="toggleActive(i)"
+            *ngFor="let profile of sampleProfiles; let i = index">
+
+            <ng-container item-left item-content>
+              <button 
+                [@fade]
+                ion-button 
+                clear 
+                *ngIf="selectedId === i" 
+                color="transparent" 
+                (click)="slideToDetails()">
+                <ion-icon color="dark" name="create" ></ion-icon>
+              </button>
+              <ion-thumbnail (click)="toggleProfile(i)">
+                <img src="profile.images[0]">
+              </ion-thumbnail>
+            </ng-container>
+            <ion-label (click)="toggleProfile(i)"><h2>{{ profile.name}}</h2>
+            <h3>{{ profile.desc }}</h3></ion-label>
+            <ion-note item-right>
+              <button 
+                [@fade]
+                item-content
+                id="cam" 
+                ion-button 
+                small 
+                *ngIf="selectedId === i" 
+                color="transparent" 
+                (click)="slideToCamera()">
+                <ion-icon color="dark" name="camera"></ion-icon>
+              </button>
+            </ion-note>
+          </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="!sampleProfiles">
+          <ion-item *ngFor="let fakeItem of fakeItems">
+          </ion-item>
+        </ion-list>
+      </profiles>
+    </ion-slide>
+
+
+    <ion-slide id="camera-slide">
+        <img *ngIf="isPicTaken">
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+<!--  END TABS -->
+
+<!--  CAMERA FAB CONTROLS  -->
+<ng-container *ngIf="tabs.getActiveIndex() === 2">
+  <ion-fab 
+    [@fade]
+    top 
+    left 
+    #opacityFab 
+    *ngIf="!isPicTaken">
+      <button 
+          [@fadeIn]
+          id="opacity-toggle"
+          ion-fab
+          mini 
+          color="transparent"
+          (click)="toggleOpacity()">
+          <ion-icon  color="dark" [name]="opacityOpen ? 'close' : 'switch'"></ion-icon>
+      </button>
+      <ion-fab-list side="right">
+          <ion-range 
+              #opacityRange
+              [(ngModel)]="opacity"
+              min="0"
+              max="100"
+              color="dark"
+              id="opacity-slider">
+              <ion-label color="dark" range-left>0</ion-label>
+              <ion-label color="dark" range-right>{{ opacityRange.value || 0 }}</ion-label>
+          </ion-range>
+      </ion-fab-list>
+  </ion-fab>
+  <ion-fab
+    id="flash"
+    top 
+    right
+    *ngIf="!isPicTaken && !isOpacityOpen">
+    <button 
+        ion-fab 
+        mini 
+        color="transparent"
+        (click)="isFlashOn = !isFlashOn">
+        <ion-icon color="dark" [name]="isFlashOn ? 'sunny' : 'moon'"></ion-icon>
+    </button>
+  </ion-fab>
+</ng-container>
+
+<!--  LEFT FAB BUTTON  -->
+<ion-fab 
+  left 
+  bottom 
+  *ngIf="tabs.getActiveIndex() === 2">
+  <button 
+    ion-fab 
+    mini 
+    *ngIf="!isPicTaken" 
+    (click)="slideToProfiles()">
+    <ion-icon name="arrow-back"></ion-icon>
+  </button>
+  <button
+    id="save"
+    ion-fab 
+    mini 
+    color="transparent"
+    *ngIf="isPicTaken">
+    <ion-icon color="dark" name="download"></ion-icon>
+  </button>
+</ion-fab>
+
+<!--  CENTER FAB BUTTON  -->
+<ion-fab 
+  center 
+  bottom 
+  [@fade] 
+  *ngIf="tabs.getActiveIndex() === 2">
+  <button 
+    [@fadeIn] 
+    ion-fab 
+    *ngIf="!isPicTaken" 
+    (click)="capturePreview()">
+    <ion-icon name="camera"></ion-icon>
+  </button>
+  <button 
+    [@fadeIn] 
+    ion-fab 
+    id="delete" 
+    color="transparent" 
+    *ngIf="isPicTaken" 
+    (click)="deleteCapture()">
+    <ion-icon color="dark" name="close"></ion-icon>
+  </button>
+</ion-fab>
+
+<!--  RIGHT FAB BUTTON  -->
+<ion-fab 
+  [@fade] 
+  right 
+  bottom 
+  *ngIf="tabs.getActiveIndex() !== 1">
+  <button 
+    ion-fab 
+    mini
+    *ngIf="tabs.getActiveIndex() === 0" 
+    (click)="slideToProfiles()">
+    <ion-icon name="arrow-forward"></ion-icon>
+  </button>
+
+    <ng-container *ngIf="tabs.getActiveIndex() === 2">
+    <button 
+      ion-fab 
+      mini 
+      *ngIf="!isPicTaken" 
+      (click)="switchCamera()">
+      <ion-icon [name]="isFrontFacing ? 'reverse-camera' : 'person'"></ion-icon>
+    </button>
+
+    <button 
+      id="next"
+      ion-fab 
+      mini 
+      color="transparent"
+      *ngIf="isPicTaken">
+      <ion-icon color="dark" name="return-right"></ion-icon>
+    </button>
+  </ng-container>
+</ion-fab>
+
