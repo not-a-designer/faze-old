@@ -1,9 +1,9 @@
 /** ANGULAR REQUIREMENTS */
 import { CUSTOM_ELEMENTS_SCHEMA,
-         NgModule }        from '@angular/core';
+         NgModule }         from '@angular/core';
 
 /** IONIC-ANGULAR REQUIREMENTS */
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule }  from 'ionic-angular';
 
 /** APP IMPORTS */
 import { ComponentsModule } from '../../components/components.module';

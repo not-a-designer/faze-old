@@ -15,8 +15,8 @@ import { ComponentsModule }        from '../components/components.module';
 import { MyApp }                   from './app.component';
 
 /** NATIVE PLUGINS, 3RD PARTY PACKAGE IMPORTS */
-import { StatusBar }    from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar }               from '@ionic-native/status-bar';
+import { SplashScreen }            from '@ionic-native/splash-screen';
 
 
 @NgModule({
@@ -49,7 +49,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ],
-  
+
   /** NEEDED FOR CUSTOM COMPONENTS */
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

@@ -1,22 +1,10 @@
 <ion-header [@fade] *ngIf="tabs.getActiveIndex() !== 2">
+
   <tabs-navbar [activeTab]="getCurrentTab()" (action)="addOrShare($event)">
-    <ion-title *ngIf="getCurrentTab() === 0">{{ selectedProfile?.name }}</ion-title>
-    <ion-title *ngIf="getCurrentTab() === 1">App</ion-title>
+    <ion-title [@fadeIn] *ngIf="getCurrentTab() === 0">{{ selectedProfile?.name }}</ion-title>
+    <ion-title [@fadeIn] *ngIf="getCurrentTab() === 1">App</ion-title>
   </tabs-navbar>
-  <!--<ion-navbar>
-    <ion-buttons left>
-      <button ion-button icon-only menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title *ngIf="tabs.getActiveIndex() === 0">{{ selectedProfile?.name }}</ion-title>
-    <ion-title *ngIf="tabs.getActiveIndex() === 1">App</ion-title>
-    <ion-buttons right *ngIf="tabs.getActiveIndex() === 0">
-      <button ion-button icon-only (click)="showOptions($event)">
-        <ion-icon name="more"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>-->
+  
 </ion-header>
 
 <!--  SLIDING TAB CONTENT  -->
@@ -194,32 +182,32 @@
     left 
     #opacityFab 
     *ngIf="!isPicTaken">
-      <button 
-          [@fadeIn]
-          id="opacity-toggle"
-          ion-fab
-          mini 
-          color="transparent"
-          (click)="toggleOpacity()">
-          <ion-icon  color="dark" [name]="opacityOpen ? 'close' : 'switch'"></ion-icon>
-      </button>
-      <ion-fab-list side="right">
-          <ion-range 
-              #opacityRange
-              [(ngModel)]="opacity"
-              min="0"
-              max="100"
-              color="dark"
-              id="opacity-slider">
-              <ion-label color="dark" range-left>0</ion-label>
-              <ion-label color="dark" range-right>{{ opacityRange.value || 0 }}</ion-label>
-          </ion-range>
-      </ion-fab-list>
+    <button 
+      id="opacity-toggle"
+      ion-fab
+      mini 
+      color="transparent"
+      (click)="toggleOpacity()">
+      <ion-icon  color="dark" [name]="opacityOpen ? 'close' : 'switch'"></ion-icon>
+    </button>
+    <ion-fab-list [@fadeIn] side="right">
+      <ion-range 
+        #opacityRange
+        [(ngModel)]="opacity"
+        min="0"
+        max="100"
+        color="dark"
+        id="opacity-slider">
+        <ion-label color="dark" range-left>0</ion-label>
+        <ion-label color="dark" range-right>{{ opacityRange.value || 0 }}</ion-label>
+      </ion-range>
+    </ion-fab-list>
   </ion-fab>
   <ion-fab
     id="flash"
     top 
     right
+    [@fadeIn]
     *ngIf="!isPicTaken && !isOpacityOpen">
     <button 
         ion-fab 
@@ -235,6 +223,7 @@
 <ion-fab 
   left 
   bottom 
+  [@slideFromLeft]="slidePos"
   *ngIf="tabs.getActiveIndex() === 2">
   <button 
     ion-fab 
@@ -259,15 +248,13 @@
   bottom 
   [@fade] 
   *ngIf="tabs.getActiveIndex() === 2">
-  <button 
-    [@fadeIn] 
+  <button
     ion-fab 
     *ngIf="!isPicTaken" 
     (click)="capturePreview()">
     <ion-icon name="camera"></ion-icon>
   </button>
   <button 
-    [@fadeIn] 
     ion-fab 
     id="delete" 
     color="transparent" 
@@ -279,7 +266,7 @@
 
 <!--  RIGHT FAB BUTTON  -->
 <ion-fab 
-  [@fade] 
+[@slideFromRight]="slidePos" 
   right 
   bottom 
   *ngIf="tabs.getActiveIndex() !== 1">

@@ -4,7 +4,7 @@ import { Component, ViewChild } from '@angular/core';
 /** IONIC-ANGULAR REQUIREMENTS */
 import { IonicPage, 
          ActionSheetController,
-         //AlertController,
+         AlertController,
          Content, 
          FabList,
          //ItemSliding, 
@@ -13,16 +13,21 @@ import { IonicPage,
          //ModalController
          NavController, 
          NavParams, 
-         PopoverController,
+         //PopoverController,
          Slides,
          //ToastController, 
                               } from 'ionic-angular';
 
 /** ANIMATIONS IMPORT */
-import { fade, fadeIn, fadeOut, slideFromLeft, slideFromRight, scale } from '../../app/app.animations';
+import { fade, 
+         fadeIn, 
+         fadeOut, 
+         slideFromLeft, 
+         slideFromRight, 
+        scale }                 from '../../app/app.animations';
 
 /** 3RD PARTY IMPORTS */
-import * as moment from 'moment';
+import * as moment              from 'moment';
 
 /** LOCAL INTERFACES */
 interface Profile {
@@ -73,6 +78,7 @@ export class TabsPage {
   pageTitle: string;
   skeletonList: Array<any> = new Array(3);
   currentTab: number;
+  slidePos: string = 'out';
 
   sampleProfiles: Array<Profile> = [
     {
@@ -133,7 +139,9 @@ export class TabsPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private actionSheetCtrl: ActionSheetController,
-              private popoverCtrl: PopoverController) {
+              private alertCtrl: AlertController,
+              //private popoverCtrl: PopoverController
+  ) {
   }
 
   /** LIFECYCLE HOOK FUNCTIONS */
@@ -166,6 +174,7 @@ export class TabsPage {
     (this.getCurrentTab() === 0) ? 
       this.navCtrl.setRoot('TabsPage', { index: 2 }) : 
       this.tabs.slideTo(2);
+    this.slidePos = 'in';
     this.content.resize();
     this.tabs.lockSwipes(true);
   }
@@ -174,6 +183,7 @@ export class TabsPage {
     this.pageTitle = this.selectedProfile.name;
     this.tabs.lockSwipes(false);
     this.tabs.slideTo(0);
+    this.slidePos = 'out';
     this.content.resize();
     this.tabs.lockSwipes(true);
   }
@@ -182,6 +192,7 @@ export class TabsPage {
     this.clearSelected();
     this.tabs.lockSwipes(false);
     this.tabs.slideTo(1);
+    this.slidePos = 'out';
     this.content.resize();
     this.tabs.lockSwipes(true);
   }
@@ -192,7 +203,24 @@ export class TabsPage {
   }
 
   deleteCapture() {
-    this.isPicTaken = false;
+    this.alertCtrl.create({
+      title: 'Delete Capture',
+      message: 'Are you sure you want to delete this?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => console.log('dont delete')
+        }, {
+          text: 'Delete',
+          role: 'destructive',
+          handler: () => {
+            this.isPicTaken = false;
+          }
+        }
+      ]
+    }).present();
+    
   }
 
   switchCamera() {

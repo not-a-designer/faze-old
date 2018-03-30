@@ -2,8 +2,9 @@
 import { Component,
          EventEmitter, 
          Input,
-         Output }             from '@angular/core';
+         Output }            from '@angular/core';
 
+/** IONIC-ANGULAR REQUIREMENTS */
 import { PopoverController } from 'ionic-angular';
 
 

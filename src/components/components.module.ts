@@ -10,8 +10,8 @@ import { ProfilesComponent }       from './profiles/profiles';
 import { ProfileDetailsComponent } from './profile-details/profile-details';
 import { TabsNavbarComponent }     from './tabs-navbar/tabs-navbar';
 import { PersonalComponent }       from './personal/personal';
-import { BillingComponent } from './billing/billing';
-import { ShippingComponent } from './shipping/shipping';
+import { BillingComponent }        from './billing/billing';
+import { ShippingComponent }       from './shipping/shipping';
 
 
 @NgModule({
@@ -21,7 +21,8 @@ import { ShippingComponent } from './shipping/shipping';
 	    TabsNavbarComponent,
     	PersonalComponent,
     	BillingComponent,
-    	ShippingComponent],
+    	ShippingComponent
+	],
 	imports: [
 		CommonModule,
 		IonicModule

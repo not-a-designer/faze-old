@@ -8,11 +8,8 @@ import { Component } from '@angular/core';
 })
 export class PersonalComponent {
 
-  text: string;
-
   constructor() {
     console.log('Hello PersonalComponent Component');
-    this.text = 'Hello World';
   }
 
 }

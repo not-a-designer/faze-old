@@ -1,16 +1,17 @@
 /** ANGULAR REQUIREMENTS */
 import { Component, 
-         ViewChild } from '@angular/core';
+         ViewChild }         from '@angular/core';
 
 /** IONIC-ANGULAR REQUIREMENTS */         
 import { IonicPage, 
+         AlertController,
          Nav, 
          NavController, 
          NavParams,
          PopoverController } from 'ionic-angular';
 
 /** ANIMATIONS IMPORT */         
-import { fade } from '../../app/app.animations';
+import { fade }              from '../../app/app.animations';
 
 
 @IonicPage()
@@ -33,7 +34,9 @@ export class MenuPage {
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              private popoverCtrl: PopoverController) {
+              private alertCtrl: AlertController,
+              //private popoverCtrl: PopoverController
+  ) {
   }
 
   /** LIFECYCLE HOOKS*/
@@ -48,15 +51,20 @@ export class MenuPage {
     this.nav.setRoot('TabsPage', { index: 1 });
   }
 
-  showBilling(event) {
-    let billingPop = this.popoverCtrl.create('BillingPage');
-    billingPop.present({
-      ev: event
-    });
+  logout() {
+    this.alertCtrl.create({
+      title: 'Logout',
+      message: 'Are you sure you want to logout?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => console.log('dont log out')
+        }, {
+          text: 'Logout',
+          handler: () => console.log('logged out!')
+        }
+      ]
+    }).present();
   }
-
-  showShipping() {
-
-  }
-
 }

@@ -1,18 +1,29 @@
 <ion-menu [content]="content">
 
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
+    <ion-toolbar id="menu-toolbar">
+      <ion-title>Settings</ion-title>
+      <ion-buttons right>
+        <button 
+          ion-button 
+          icon-right 
+          small 
+          clear
+          menuClose 
+          (click)="slideToProfiles()">
+          Profiles<ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-toolbar>
+    
   </ion-header>
 
-  <ion-content scroll="true" no-padding [@fade]>
-    <ion-list>
-      <button ion-item no-lines menuClose (click)="slideToProfiles()">
+  <ion-content>
+    <ion-list id="menu-list">
+      <!--<button ion-item detail-none no-lines menuClose (click)="slideToProfiles()">
         <ion-icon name="home"item-left></ion-icon>
         To Profiles
-      </button>
-      <ion-list-header>Settings</ion-list-header>
+      </button>-->
       <ion-toolbar>
         <ion-segment [(ngModel)]="settingsPage">
           <ion-segment-button value="personal">
@@ -39,9 +50,28 @@
         </ion-slide>
       </ion-slides>
     </ion-list>
+    <ion-fab 
+      *ngIf="settingsPage === 'shipping'"
+      id="add-shipping" 
+      bottom 
+      right>
+      <button ion-fab mini>
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-fab>
+    <ion-fab 
+      *ngIf="settingsPage === 'billing'"
+      id="add-billing" 
+      bottom 
+      right>
+      <button ion-fab mini>
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-fab>
   </ion-content>
+
   <ion-footer no-padding>
-    <button ion-button icon-right block full menuClose>
+    <button no-margin ion-button icon-right block full menuClose (click)="logout()">
       <ion-icon name="log-out"></ion-icon>
       Logout
     </button>
