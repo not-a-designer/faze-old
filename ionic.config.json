@@ -1,6 +1,6 @@
 {
   "name": "faze",
-  "app_id": "",
+  "app_id": "033e70d2",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
