@@ -1,0 +1,28 @@
+<ion-list *ngIf="profiles.length > 0" no-padding>
+    <button 
+    ion-item [color]="toggleActive(i) ? 'faze' : null"
+    id="profile-item"
+    *ngFor="let profile of profiles; let i = index"
+    detail-none 
+    padding-horizontal
+    [class.selected-profile]="toggleActive(i)"
+    (click)="toggleProfile(i)"
+    (press)="deleteProfile(i)">
+        <ion-avatar item-left>
+            <img src="profile.images[0]">
+        </ion-avatar>
+        <h2 ion-text>{{ profile.name}}</h2>
+        <h3 ion-text>{{ profile.desc }}</h3>
+    </button>           
+</ion-list>
+
+<!--<ng-template #skeleton>
+    <ion-list>
+        <ion-item *ngFor="let fakeItem of fakeItems">
+            <ion-thumbnail item-left class="fake-thumbnail"></ion-thumbnail>
+            <h2 class="fake-h2"></h2>
+            <h3 class="fake-h3"></h3>
+        </ion-item>
+    </ion-list>
+</ng-template>-->
+

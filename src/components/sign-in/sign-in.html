@@ -1,0 +1,53 @@
+<!--<ion-list no-lines>-->
+  <ng-container>
+  <ion-item no-lines>
+      <ion-label 
+        color="i-faze"
+        *ngIf="platformService.isMd"
+        floating>
+        Email/username
+      </ion-label>
+      <ion-input 
+        #emailField
+        type="text"
+        required
+        [placeholder]="platformService.isMd === false ? 'Email' : ''"
+        [(ngModel)]="email">
+      </ion-input>
+  </ion-item>  
+  
+  <ion-item no-lines>
+      <ion-label 
+        color="i-faze" 
+        *ngIf="platformService.isMd" 
+        floating>
+        Password
+      </ion-label>
+      <ion-input 
+        #passwordField
+        type="password"
+        required
+        [placeholder]="platformService.isMd === false ? 'Password' : ''"
+        [(ngModel)]="password">
+      </ion-input>
+    </ion-item> 
+    <ion-item hidden="true">
+        <ion-input></ion-input>
+    </ion-item>
+    <button
+      [@fade]
+      id="login"
+      ion-button
+      icon-only
+      item-right
+      no-padding
+      clear
+      *ngIf="emailField.value.length > 3"
+      color="'i-faze" 
+      [disabled]="passwordField.value.length < 6"
+      (click)="dummyLogin()">
+      <ion-icon color="i-faze" name="log-in"></ion-icon>
+    </button> 
+  </ng-container>
+<!--</ion-list>-->
+

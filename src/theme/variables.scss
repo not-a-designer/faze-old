@@ -19,12 +19,7 @@ $app-direction: ltr;
 // --------------------------------------------------
 // To customize the look and feel of this app, you can override
 // the Sass variables found in Ionic's source scss files.
-// To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/theming/overriding-ionic-variables/
-
-
-
-
+// 
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -34,36 +29,105 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
-  transparent:  transparent
+  primary:         #3880ff,
+  secondary:       #0cd1e8,
+  tertiary:        #7044ff,
+  success:         #10dc60,
+  warning:         #ffce00,
+  danger:          #f04141,
+  light:           #f4f5f8,
+  medium:          #989aa2,
+  dark:            #222428,
+  transparent:     transparent,
+  toolbar-dark:    #cd7f32,
+
+  faze: (
+    base:          //#336666,
+                   //#3a106a,
+                  #fc0,
+    contrast:      //#ffff00
+                   //#d9e021
+                   #06f
+  ),
+  i-faze: (
+    base:          //#ffff00,
+                   //#d9e021
+                   #06f,
+    contrast:      //#336666
+                   //#3a106a,
+                   #fc0
+  )
 );
 
+
+
+$text-color:       color($colors, faze, contrast);//#06f;//#336666;
+//$list-border-color:#06f;//#336666;
+$button-round-border-radius: 50%;
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-$popover-ios-width: auto;
-
-$toolbar-ios-height: 46px;
-
-
-
+  $toolbar-ios-height: 44px !important;
+  $segment-button-ios-background-color: color($colors, faze, contrast);//#06f;
+  $segment-button-ios-background-color-activated: color($colors, faze, base);//#fc0;
+  $segment-button-ios-toolbar-button-height: 100% !important;
+  $segment-button-ios-toolbar-button-max-width: 100%;
+  $segment-button-ios-border-width: 0px !important;
+  $segment-button-ios-line-height: 5.75rem !important;
+  //$segment-button-ios-border-radius: 0 !important;
+  $segment-button-ios-icon-size: 3rem !important;
+  $card-ios-padding-top: 5px;
+  $card-ios-header-padding-bottom: 2px !important;
+  $card-ios-padding-top: 5px !important;
+  $card-ios-padding-left: 0px  !important;
+  $alert-ios-background: color($colors, faze, base);//#fc0 !important;
+  $alert-ios-button-border-color: color($colors, faze, contrast);//#06f !important;
+  $alert-ios-subtitle-text-color: color($colors, faze, contrast);//#06f !important;
+  $alert-ios-message-text-color: color($colors, faze, contrast);//#06f !important;
+  $list-ios-header-background-color: color($colors, faze, base);//#fc0 !important;
+  $button-ios-small-icon-font-size: 2.3em !important;
+  
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-$popover-md-width: auto;
+$segment-button-md-background-color: color($colors, faze, contrast);//#06f;
+$segment-button-md-background-color-activated: color($colors, faze, base);//#fc0;
+$segment-button-md-toolbar-button-height: 100% !important;
+$segment-button-md-toolbar-button-max-width: 100%;
+//$text-input-md-border-color: transparent !important;
+$card-md-padding-top: 5px;
+$card-md-header-padding-bottom: 2px !important;
+$card-md-padding-top: 5px !important;
+$card-md-padding-left: 0px  !important;
+$alert-md-background-color: color($colors, faze, base);//#fc0 !important;
+$alert-md-button-border-color: color($colors, faze, contrast);//#06f !important;
+$alert-md-subtitle-text-color: color($colors, faze, contrast);//#06f !important;
+$alert-md-message-text-color: color($colors, faze, contrast);//#06f !important;
+$list-md-header-background-color: color($colors, faze, base) !important;
+$fab-md-box-shadow: none !important;
 
 
 
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-$popover-wp-width: auto;
+$segment-button-wp-background-color: color($colors, faze, contrast);//#06f;
+$segment-button-wp-background-color-activated: color($colors, faze, base);//#fc0;
+$segment-button-wp-toolbar-button-height: 100% !important;
+$segment-button-wp-toolbar-button-width: 100%;
+$segment-button-wp-line-height: 5rem !important;
+$segment-button-wp-buttons-justify-content: space-between !important;
+$text-input-wp-border-width: 0 !important;
+$card-wp-padding-top: 5px !important;
+$card-wp-padding-left: 0px  !important;
+$card-wp-header-padding-bottom: 2px !important;
+$alert-wp-background: color($colors, faze, base);//#fc0 !important;
+$alert-wp-button-border-color: color($colors, faze, contrast);//#06f !important;
+$alert-wp-subtitle-text-color: color($colors, faze, contrast);//#06f !important;
+$alert-wp-message-text-color: color($colors, faze, contrast);//#06f !important;
+$list-wp-header-background-color: color($colors, faze, base);
 
 
 

@@ -1,0 +1,10 @@
+<ion-list>
+    <ion-list-header>Social</ion-list-header>
+      <ion-item-group>
+        <ion-item *ngFor="let social of socialData">
+          <ion-icon item-left [name]="social.icon"></ion-icon>
+          <ion-label>{{ social.title }}</ion-label>
+          <ion-toggle item-right></ion-toggle>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>

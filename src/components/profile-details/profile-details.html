@@ -1,0 +1,86 @@
+<ion-card *ngIf="profile" no-padding>
+    <ion-card-header no-lines no-margin>
+        <ion-slides 
+            #thumbSlide 
+            id="thumbSlide" 
+            *ngIf="profile.images.length; else noPics">
+
+            <ion-slide 
+                no-padding
+                *ngFor="let image of profile.images; let i = index"
+                pager="true"
+                paginationType="bullet">
+
+                <ion-fab top right>
+                    <button 
+                        ion-fab 
+                        mini 
+                        outline
+                        id="remove"
+                        (click)="remove(i)">
+                        <ion-icon color="i-faze" name="close"></ion-icon>
+                    </button>
+                </ion-fab>
+
+                <ion-fab bottom left *ngIf="!thumbSlide.isBeginning()">
+                    <button 
+                        ion-fab 
+                        mini 
+                        id="prev"
+                        outline 
+                        (click)="slidePrev()">
+                        <ion-icon color="i-faze" name="arrow-back"></ion-icon>
+                    </button>
+                </ion-fab>
+
+                <ion-fab bottom right *ngIf="!thumbSlide.isEnd()">
+                    <button 
+                        ion-fab 
+                        mini
+                        id="forward"
+                        outline 
+                        (click)="slideNext()">
+                        <ion-icon color="i-faze" name="arrow-forward"></ion-icon>
+                    </button>
+                </ion-fab>
+
+                <img [src]="image">
+            </ion-slide>
+        </ion-slides>
+
+        <ng-template #noPics>
+            <ion-list-header no-lines>No Pictures</ion-list-header>
+        </ng-template>
+    </ion-card-header>
+
+    <ion-card-content no-padding>
+
+        <ion-card-title text-center>
+
+            <ion-item no-lines>
+                <ion-label item-left inline>title:</ion-label>
+                <ion-input 
+                type="text" 
+                placeholder="Profile title" 
+                [(ngModel)]="profile.name" 
+                required></ion-input>
+                <ion-note item-right>
+                {{ profile.images.length ? profile.images.length  : '' }}
+                    <span *ngIf="profile.images.length > 1">imgs</span>
+                    <span *ngIf="profile.images.length === 1">img</span>
+                </ion-note>
+            </ion-item>
+        </ion-card-title>
+
+        <ion-list no-padding>
+        <ion-item>
+            <ion-label item-left inline>started:</ion-label>
+            <ion-note item-right>{{ profile.dateCreated }}</ion-note>
+        </ion-item>
+        <ion-item no-lines>
+            <ion-textarea placeholder="Profile description" [(ngModel)]="profile.desc"></ion-textarea>
+        </ion-item>   
+        <ion-list-header>Alerts</ion-list-header>                    
+        </ion-list>
+    </ion-card-content>
+</ion-card>

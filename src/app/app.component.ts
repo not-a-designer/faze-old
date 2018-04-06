@@ -7,6 +7,7 @@ import { Platform }     from 'ionic-angular';
 /** IONIC NATIVE, 3RD PARTY IMPORTS */
 import { StatusBar }    from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { timer }        from 'rxjs/observable/timer';
 
 
 @Component({
@@ -14,7 +15,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 })
 export class MyApp {
 
-  rootPage: string = 'MenuPage';
+  rootPage: string = 'LoginPage';
+
+  showSplash: boolean = true;
 
   constructor(public platform: Platform, 
               public statusBar: StatusBar, 
@@ -28,6 +31,8 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      timer(2000).subscribe(() => this.showSplash = false);
     });
   }
 }

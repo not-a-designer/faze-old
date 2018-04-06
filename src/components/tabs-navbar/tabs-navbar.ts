@@ -5,12 +5,19 @@ import { Component,
          Output }            from '@angular/core';
 
 /** IONIC-ANGULAR REQUIREMENTS */
-import { PopoverController } from 'ionic-angular';
+//import {  } from 'ionic-angular';
 
+/** APP IMPORTS */
+import { ProfileMockService } from '../../services/profile-mock.service';
+
+/** ANIMATIONS IMPORT */
+import { fadeIn } from '../../app/app.animations';
+import { Profile } from '../../models/interfaces/profile.interface';
 
 @Component({
   selector: 'tabs-navbar',
-  templateUrl: 'tabs-navbar.html'
+  templateUrl: 'tabs-navbar.html',
+  animations: [ fadeIn ]
 })
 export class TabsNavbarComponent {
 
@@ -18,25 +25,57 @@ export class TabsNavbarComponent {
   @Input('activeTab')
   activeTab: number;
 
+  @Input('profileOptions')
+  profileOptions: any;
+
+  
+
+  @Input('settingsEnabled')
+  settingsEnabled: boolean;
+
+  @Input('title')
+  title: string;
+
   @Output('action')
   action: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private popoverCtrl: PopoverController) {
+  shareEnabled: boolean;
+
+  constructor(public profileService: ProfileMockService) {
     console.log('Hello TabsNavbarComponent Component');
   }
 
-  showOptions(event) {
-    let popover = this.popoverCtrl.create('ProfileOptionsPage');
-
-    popover.onDidDismiss((data) => {
-      if (data) {
-        console.log(data);
-        this.action.emit(data.param);
-      }
-    });
-    popover.present({
-      ev: event
-    });
+  add() {
+    this.action.emit('add');
   }
 
+  camera() {
+    this.action.emit('camera');
+  }
+
+  details() {
+    this.action.emit('details');
+  }
+
+  share() {
+    this.action.emit('share');
+  }
+
+  settings() {
+    this.action.emit('settings');
+  }
+
+  hide() {
+    this.action.emit('hide');
+  }
+
+  delete() {
+    this.action.emit('delete');
+  }
+
+  toggleShare(): boolean {
+    const profile: Profile = this.profileService.getSelectedProfile();
+    if (!profile.images || profile.images.length < 10) return true;
+    else return false;
+  }
 }

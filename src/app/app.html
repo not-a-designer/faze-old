@@ -1,2 +1,6 @@
+<div *ngIf="showSplash" class="splash">
+    <ion-spinner showWhen="android" name="cresent"></ion-spinner>
+    <ion-spinner showWhen="ios, windows" name="ios"></ion-spinner>
+</div>
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" swipeBackEnabled="false"></ion-nav>

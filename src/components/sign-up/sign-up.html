@@ -1,0 +1,46 @@
+<ng-container>
+    <ion-item no-lines>
+        <ion-label *ngIf="platformService.isMd" color="i-faze" floating>Email</ion-label>
+        <ion-input 
+        #emailField
+        type="text"
+        required
+        [placeholder]="platformService.isMd === false ? 'Email' : ''"
+        [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+    <ion-item no-lines>
+        <ion-label *ngIf="platformService.isMd" color="i-faze" floating>Password</ion-label>
+        <ion-input 
+          #passwordField
+          type="password"
+          required
+          [placeholder]="platformService.isMd === false ? 'Password' : ''"
+          [(ngModel)]="password">
+        </ion-input>
+    </ion-item>
+  
+    <ion-item no-lines>
+        <ion-label *ngIf="platformService.isMd" color="i-faze" floating>Confirm password</ion-label>
+        <ion-input 
+          #confirmField
+          type="password"
+          required
+          [placeholder]="platformService.isMd === false ? 'Confirm password' : ''"
+          [(ngModel)]="confirm">
+        </ion-input>
+    </ion-item>
+      <button
+        id="register"
+        ion-button
+        icon-only
+        item-right
+        no-padding
+        clear
+        *ngIf="emailField.value.length > 3 && passwordField.value.length > 6"
+        color="i-faze"
+        [disabled]="passwordField.value !== confirmField.value"
+        (click)="dummyRegister()">
+        <ion-icon color="i-faze" large name="person-add"></ion-icon>
+      </button>
+</ng-container>

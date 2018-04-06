@@ -1,19 +1,70 @@
-<ion-navbar>
-    <ion-buttons left>
-        <button ion-button icon-only menuToggle>
-            <ion-icon large name="happy"></ion-icon>
-        </button>
-    </ion-buttons>
+<ion-navbar color="i-faze">
+  <ion-buttons left>
+    <ion-avatar>
+      <img id="logo" src="assets/imgs/logo.png">
+    </ion-avatar>
+  </ion-buttons>
 
-    <!--  ION_TITLE GOES HERE  -->
-    <ng-content></ng-content>
+  <ion-title *ngIf="settingsEnabled">{{ this.profileService.getSelectedProfile()?.name || 'Profiles' }}</ion-title>
+  <ion-title *ngIf="!settingsEnabled">Settings</ion-title>
 
-    <ion-buttons right *ngIf="activeTab === 0">
-        <button 
-          ion-button 
-          icon-only 
-          (click)="showOptions($event)">
-            <ion-icon name="more"></ion-icon>
-        </button>
-    </ion-buttons>
+  <ion-buttons right>
+    <!--  PROFILE DETAILS CONTROLS  -->
+    <ng-container *ngIf="activeTab === 0 && settingsEnabled">
+      <button [@fadeIn] ion-button icon-only (click)="camera()">
+        <ion-icon name="camera"></ion-icon>
+      </button>
+
+      <button [@fadeIn] ion-button icon-only [disabled]="toggleShare()" (click)="share()">
+        <ion-icon name="share"></ion-icon>
+      </button>
+    </ng-container>
+
+    <!--  PROFILE SELECTION CONTROLS  -->
+    <ng-container *ngIf="activeTab === 1">
+      <button 
+        [@fadeIn] 
+        *ngIf="profileOptions && settingsEnabled" 
+        ion-button 
+        icon-only 
+        (click)="details()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+
+      <button 
+        [@fadeIn] 
+        *ngIf="profileOptions && settingsEnabled" 
+        ion-button 
+        icon-only 
+        (click)="camera()">
+        <ion-icon name="camera"></ion-icon>
+      </button>
+    </ng-container>
+
+    <button 
+      [@fadeIn] 
+      ion-button 
+      icon-only 
+      *ngIf="profileOptions"
+      (click)="delete()">
+      <ion-icon name="trash"></ion-icon>
+    </button>
+
+    <button 
+      [@fadeIn] 
+      *ngIf="activeTab === 1 && settingsEnabled && !profileOptions" 
+      ion-button 
+      icon-only 
+      (click)="add()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+
+    <button 
+      [@fadeIn]  
+      ion-button 
+      icon-only 
+      (click)="settingsEnabled ? settings() : hide()">
+      <ion-icon [name]="settingsEnabled ? 'settings' : 'done-all'"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-navbar>
